@@ -1,30 +1,37 @@
 import * as React from "react";
-import { useState } from 'react';
-
+import { useState, useCallback } from 'react';
+import { useObserver, useLocalStore } from 'mobx-react'
+import { inputStore } from "../store/store";
+import { action } from 'mobx';
 
 const Home = () => {
-  const [value, setValue] = useState('')
-  const onChangeTarget = (a) => {
-    setValue(a.target.value);
-  }
-  const onSubmit = (e) => {
+  const state = useLocalStore(() => ({
+    value: '',
+    onChangeTarget(a) {
+      this.value = a.target.value;
+    }
+  }))
+
+  const onSubmit = useCallback((e) => {
     e.preventDefault()
-    console.log('value', value);
-    setValue('');
-  }
+
+    inputStore.inputGo(state.value);
+  }, [])
 
 
-
-  return (
+  return useObserver(()=>(
     <>
       <div>
         <form onSubmit={onSubmit}>
-          <input type={'text'} value={value} onChange={onChangeTarget}/>
+          <input value={state.value} onChange={state.onChangeTarget}/>
           <input type="submit" value="Submit" />
         </form>
+
+        {inputStore.render && <div>{inputStore.render}</div>}
+
       </div>
     </>
-  );
+  ));
 };
 
 export default Home;
