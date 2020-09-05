@@ -7,14 +7,13 @@ import { action } from 'mobx';
 const Home = () => {
   const state = useLocalStore(() => ({
     value: '',
-    onChangeTarget(a) {
-      this.value = a.target.value;
-    }
+    onChangeTarget: action((a) => {
+      state.value = a.target.value;
+    })
   }))
 
   const onSubmit = useCallback((e) => {
     e.preventDefault()
-
     inputStore.inputGo(state.value);
   }, [])
 
@@ -39,11 +38,11 @@ export default Home;
 
 /*
 
-간단한 form , 딱 input 1개 있는거를 만들어보자
+
 component -> input
 store -> mobx
 back -> localhost 3001/post
 db -> mysql and sequelize
-여기서 aws를 연습해야 ??
+
 
 */
