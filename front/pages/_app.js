@@ -1,5 +1,6 @@
 import * as React from "react";
 import Head from "next/head";
+import "antd/dist/antd.css";
 
 const Devsner = ({Component}) => {
   return (
