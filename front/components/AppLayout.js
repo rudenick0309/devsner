@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Row, Col, Breadcrumb } from "antd";
+import {Row, Col, Breadcrumb, } from "antd";
 import {Layout, Menu} from "antd";
 import styled from 'styled-components'
 import {
@@ -10,27 +10,41 @@ import {
   VideoCameraOutlined
 } from "@ant-design/icons";
 import Link from "next/link";
+import Error from "./Erros";
 
+const { SubMenu } = Menu;
+const {Header, Content, Sider} = Layout;
 
-const HeaderStyled = styled('Header')`
+const HeaderStyled = styled(Header)`
   background-color : white;
   font-size:20px;
   display: flex;
   justify-content:flex-end;
 `
 
+const TestItem = styled(Menu.Item)`
+  font-size:24px;
+`
+
+const TextSubmenu = styled(SubMenu)`
+  font-size: 24px;
+  background-color: pink;
+`
+
 const AppLayout = ({children}) => {
-  const {Header, Content, Sider} = Layout;
+  const {Item} = Menu;
+
   return (
     <Layout>
-      <HeaderStyled style={{ backgroundColor:'white'}} >
 
+      <HeaderStyled style={{ backgroundColor:'white'}} >
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">Home</Menu.Item>
           <Menu.Item key="2">Login</Menu.Item>
           <Menu.Item key="3">Sign Up</Menu.Item>
         </Menu>
       </HeaderStyled>
+
       <Layout>
         <Sider width={200} >
           <Menu
@@ -40,7 +54,9 @@ const AppLayout = ({children}) => {
             style={{ height: '100vh', borderRight: 0 }}
           >
             <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="Errors">
-              <Menu.Item key="1">react</Menu.Item>
+              <Menu.Item key="1">
+                <Link href={'/errors/react'}><a>react</a></Link>
+              </Menu.Item>
               <Menu.Item key="2">next</Menu.Item>
               <Menu.Item key="3">js</Menu.Item>
 
@@ -51,8 +67,12 @@ const AppLayout = ({children}) => {
               <Menu.Item key="7">js</Menu.Item>
             </Menu.SubMenu>
 
+
+
+            {/*<Error />*/}
           </Menu>
         </Sider>
+
         <Layout style={{ padding: '0 24px 24px' }}>
           <Content
             className="site-layout-background"
@@ -66,6 +86,7 @@ const AppLayout = ({children}) => {
           </Content>
         </Layout>
       </Layout>
+
     </Layout>
   );
 };
