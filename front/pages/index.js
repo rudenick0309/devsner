@@ -7,15 +7,20 @@ import { action } from 'mobx';
 const Home = () => {
   const state = useLocalStore(() => ({
     value: '',
-    onChangeTarget(a) {
-      this.value = a.target.value;
-    }
+    onChangeTarget: action((a) => {
+      state.value = a.target.value;
+    }),
+    areaValue: '',
+    onChangeArea: action((a) => {
+      state.areaValue = a.target.value;
+    })
   }))
 
   const onSubmit = useCallback((e) => {
     e.preventDefault()
-
-    inputStore.inputGo(state.value);
+    console.log('in onsubmit, value: ', state.value, '/', state.areaValue);
+    inputStore.inputGo({value: state.value, areaValue:state.areaValue});
+    // inputStore.inputGo({state.value, state.areaValue});
   }, [])
 
 
@@ -24,10 +29,12 @@ const Home = () => {
       <div>
         <form onSubmit={onSubmit}>
           <input value={state.value} onChange={state.onChangeTarget}/>
-          <input type="submit" value="Submit" />
+          <textarea value={state.areaValue} onChange={state.onChangeArea} />
+          {/*<input type="submit" value="Submit" />*/}
+          <button type={'submit'}/>
         </form>
 
-        {inputStore.render && <div>{inputStore.render}</div>}
+        {/*{inputStore.render && <div>{inputStore.render}</div>}*/}
 
       </div>
     </>
@@ -39,11 +46,11 @@ export default Home;
 
 /*
 
-간단한 form , 딱 input 1개 있는거를 만들어보자
+
 component -> input
 store -> mobx
 back -> localhost 3001/post
 db -> mysql and sequelize
-여기서 aws를 연습해야 ??
+
 
 */
