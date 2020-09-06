@@ -1,2 +1,5 @@
 /front/.env
 /back/.env
+/front/node_modules/
+/back/node_modules/
+/front/test.css
