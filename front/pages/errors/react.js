@@ -1,7 +1,7 @@
 import * as React from "react";
 import AppLayout from "../../components/AppLayout";
 import dynamic from 'next/dynamic'
-const Editor = dynamic(() => import('../../components/Testpage'), {
+const Editor = dynamic(() => import('../../components/Editor'), {
   ssr:false
 })
 
