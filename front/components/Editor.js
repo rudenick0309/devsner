@@ -1,45 +1,56 @@
-import React, {useState, useCallback} from "react";
+import React, {useCallback} from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
+import ReactHtmlParser from "react-html-parser";
+import {errorsReact} from "../store/errorsReact";
+import {useLocalStore, useObserver} from "mobx-react";
+import {action} from "mobx";
 
 const Editor = () => {
-  const [value, setValue] = useState("");
-  const onChange = useCallback((e, editor) => {
-    const data = editor.getData();
-    console.log('in editor,onchange, data;', data);
-    setValue(data)
+  const state = useLocalStore(() => ({
+    title: '',
+    value: "",
+    onChangeTitle: action((e) => {
+      state.title = e.target.value;
+    }),
+    onChangeContent: action((e, editor) => {
+      state.value = editor.getData();
+    }),
+  }));
 
-  }, [value])
-
-  const onSubmit = useCallback((e)=>{
+  const onSubmit = useCallback((e) => {
     e.preventDefault();
     //ajax
-    console.log('in editor, onsubmit, 1 value;',value); // 그저 value 만 mobx로 보내주면 된다
+    console.log("in editor, onsubmit, 1 value;", state.value); // 그저 value 만 mobx로 보내주면 된다
+    errorsReact.errorsReactC({title: state.title, content: state.value});
+    state.title = ''
+    state.value = ''
+  }, [state.title, state.value]);
 
-    setValue('')
-  },[value])
-
-  return (
+  return useObserver(() => (
     <>
-
       <form onSubmit={onSubmit}>
+        <input type={'text'} value={state.title} onChange={state.onChangeTitle}/>
+
         <CKEditor
-          data={value}
+          data={state.value}
           onInit={editor =>
             console.log("Editor is ready to use!", editor)
           }
-          onChange={onChange}
+          onChange={state.onChangeContent}
+          config={{
+            ckfinder: {
+              uploadUrl: "/upload/images"
+            }
+          }}
           editor={ClassicEditor}
         />
-        <input type={'submit'} title={'submit'}/>
+        <input type={"submit"} title={"submit"}/>
       </form>
 
-      {value && <div>{ReactHtmlParser(value)}</div>}
+      {state.value && <div>{ReactHtmlParser(state.value)}</div>}
     </>
-  );
+  ));
 };
-
 
 export default Editor;
