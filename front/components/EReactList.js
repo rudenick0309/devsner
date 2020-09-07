@@ -1,13 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
+import ReactHtmlParser from "react-html-parser";
 
-const EReactList = (props) => {
-  console.log('in EReactList, props', props)
+const EReactList = ({data}) => {
+  console.log("in EReactList, props", data);
+  const {title, content, createdAt} = data;
 
   return (
     <>
-      <div>테스트</div>
-      </>
-  )
-}
+      <div>{title}</div>
+    </>
+  );
+};
 
 export default EReactList;
