@@ -10,6 +10,7 @@ import EReactList from "../../components/EReactList";
 const Editor = dynamic(() => import('../../components/Editor'), {
   ssr:false
 })
+import {toJS} from 'mobx'
 
 const errorReact = () => {
 
@@ -22,9 +23,9 @@ const errorReact = () => {
   return useObserver(() => (
     <AppLayout>
       <Editor/>
-      {/*{errorsReact.render && errorsReact.render.map((el) => {*/}
-      {/*  return <EReactList data={el} />*/}
-      {/*})}*/}
+      {toJS(errorsReact.render) && toJS(errorsReact.render).reverse().map((el) => {
+        return <EReactList data={el} />
+      })}
     </AppLayout>
   ));
 };
