@@ -21,7 +21,24 @@ router.post('/react', async (req, res, next) => {
 router.get('/react', async (req, res, next) => {
   try {
     const react = await ErrorsReact.findAll()
+    console.log('in b, eReact get, react; ', react);
     res.status(201).json(react)
+  } catch(err) {
+    console.error(err);
+    next(err);
+  }
+})
+
+router.get('/react/dpost', async (req, res, next) => {
+  // console.log('in back, dpost, req ;', req.body);
+  console.log('in back, dpost, req ;', req.query);
+  try {
+    const post = await ErrorsReact.findOne(
+      { where: { id: req.query.key } },
+      {attributes: ["title", "content", "createdAt"]},
+    )
+    console.log('in back, post ; ', post)
+    res.status(201).json(post)
   } catch(err) {
     console.error(err);
     next(err);
