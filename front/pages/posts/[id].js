@@ -5,9 +5,10 @@ import {dynamicPost} from "../../store/dynamicPost";
 import AppLayout from "../../components/AppLayout";
 import {toJS} from "mobx";
 import {inject, observer} from "mobx-react";
-// import {useRouter} from 'next/router'
+import {useRouter} from 'next/router'
 
 const Post = ({data}) => {
+  const router = useRouter()
   console.log("in f post, props;", data);
   return (
     <AppLayout>
@@ -20,10 +21,10 @@ export async function getServerSideProps(context) {
   console.log("in getserverside, context,; ", context.query.id);   // 3 값이 정상적으로 나옴
   await dynamicPost.eReactPostR(context.query.id);  // 요청  성공함
   console.log('in getserverside, context, eRPrender ;' , dynamicPost.eRPrender);
-  let postData = dynamicPost.eRPrender;
-  console.log('in getserverside, context, postData;', postData);
+  let data = dynamicPost.eRPrender;
+  console.log('in getserverside, context, postData;', data);
   return {
-    props: {data: postData}
+    props: {data}
   };
 }
 
