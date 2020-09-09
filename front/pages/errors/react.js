@@ -26,6 +26,7 @@ const errorReact = () => {
       })}
     </AppLayout>
   ));
+
 };
 
 export default errorReact;
