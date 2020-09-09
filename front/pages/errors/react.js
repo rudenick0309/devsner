@@ -17,13 +17,13 @@ const Editor = dynamic(() => import("../../components/Editor"), {
 const eReact = () => {
 
   useEffect(() => {
-    editPost.errorsReactR("1");
+    editPost.postR("1");
   }, []);
 
   return useObserver(() => (
     <AppLayout>
       {/*<Editor/>*/}
-      {toJS(editPost.render) && toJS(editPost.render).reverse().map((el) => {
+      {toJS(editPost.post) && toJS(editPost.post).reverse().map((el) => {
         return <EReactList data={el}/>;
       })}
     </AppLayout>

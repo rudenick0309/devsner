@@ -26,7 +26,7 @@ const Editor = () => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    editPost.errorsReactC({category: state.category, title: state.title, content: state.value});
+    editPost.postC({category: state.category, title: state.title, content: state.value});
     state.title = "";
     state.value = "";
   }, [state.title, state.value]);
