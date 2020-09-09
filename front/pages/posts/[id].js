@@ -1,25 +1,18 @@
 import * as React from "react";
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import {dynamicPost} from "../../store/dynamicPost";
 import AppLayout from "../../components/AppLayout";
 import {toJS} from "mobx";
-import {inject, observer} from "mobx-react";
 import {useRouter} from "next/router";
 import ReactHtmlParser from "react-html-parser";
-import {useObserver, useLocalStore} from "mobx-react";
+import {useObserver} from "mobx-react";
 
-// 컴포넌트 전체에 setTImeout을 주는 거는??
 const Post = () => {
   const router = useRouter();
-  // const state = useLocalStore(() => ({
-  //   post : '',
-  // }))
 
-  console.log("in f post, router ;", router.query.id);
   useEffect(() => {
     dynamicPost.eReactPostR(router.query.id);
-
-  }, []);
+  }, [router.query.id]);
 
   return useObserver(() => (
     <AppLayout>
@@ -30,7 +23,6 @@ const Post = () => {
     </AppLayout>
   ));
 };
-
 
 export default Post;
 
