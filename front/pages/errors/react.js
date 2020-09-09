@@ -6,21 +6,23 @@ import {action} from "mobx";
 import {errorsReact} from "../../store/errorsReact";
 import dynamic from "next/dynamic";
 import EReactList from "../../components/EReactList";
+import {useRouter} from 'next/router'
+import {toJS} from "mobx";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false
 });
-import {toJS} from "mobx";
 
-const errorReact = () => {
+
+const eReact = () => {
 
   useEffect(() => {
-    errorsReact.errorsReactR();
+    errorsReact.errorsReactR("1");
   }, []);
 
   return useObserver(() => (
     <AppLayout>
-      <Editor/>
+      {/*<Editor/>*/}
       {toJS(errorsReact.render) && toJS(errorsReact.render).reverse().map((el) => {
         return <EReactList data={el}/>;
       })}
@@ -28,4 +30,4 @@ const errorReact = () => {
   ));
 };
 
-export default errorReact;
+export default eReact;
