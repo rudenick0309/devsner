@@ -11,14 +11,14 @@ const Post = () => {
   const router = useRouter();
 
   useEffect(() => {
-    dynamicPost.eReactPostR(router.query.id);
+    dynamicPost.postR(router.query.id);
   }, [router.query.id]);
 
   return useObserver(() => (
     <AppLayout>
-      <div> {toJS(dynamicPost.eRPrender?.createdAt)} </div>
-      <div> {toJS(dynamicPost.eRPrender?.title)} </div>
-      <div> {ReactHtmlParser(toJS(dynamicPost.eRPrender?.content))} </div>
+      <div> {toJS(dynamicPost.post?.createdAt)} </div>
+      <div> {toJS(dynamicPost.post?.title)} </div>
+      <div> {ReactHtmlParser(toJS(dynamicPost.post?.content))} </div>
 
     </AppLayout>
   ));
