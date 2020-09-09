@@ -2,7 +2,7 @@ import React, {useCallback} from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
-import {errorsReact} from "../store/errorsReact";
+import {editPost} from "../store/editPost";
 import {useLocalStore, useObserver} from "mobx-react";
 import {action} from "mobx";
 
@@ -26,7 +26,7 @@ const Editor = () => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    errorsReact.errorsReactC({category: state.category, title: state.title, content: state.value});
+    editPost.errorsReactC({category: state.category, title: state.title, content: state.value});
     state.title = "";
     state.value = "";
   }, [state.title, state.value]);
