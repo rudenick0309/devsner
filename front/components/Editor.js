@@ -1,67 +1,88 @@
-import React, {useCallback} from "react";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ReactHtmlParser from "react-html-parser";
+import React, {Component} from "react";
+import {Editor} from "@toast-ui/react-editor";
 import {editPost} from "../store/editPost";
-import {useLocalStore, useObserver} from "mobx-react";
-import {action} from "mobx";
+import Router from 'next/router'
 
-const Editor = () => {
-  const state = useLocalStore(() => ({
-    title: "",
-    onChangeTitle: action((e) => {
-      state.title = e.target.value;
-    }),
+class EditArticle extends Component {
+  editorRef = React.createRef();
+  titleRef = React.createRef();
+  categoryRef = React.createRef();
 
-    value: "",
-    onChangeContent: action((e, editor) => {
-      state.value = editor.getData();
-    }),
+  constructor() {
+    super();
+    this.state = {
+      content: "",
+      title: "",
+      category: "1",
+    };
+  }
 
-    category: "1",
-    onChangeCategory: action((e) => {
-      state.category = e.target.value;
-    })
-  }));
-
-  const onSubmit = useCallback((e) => {
+  onSubmit = (e) => {
     e.preventDefault();
-    editPost.postC({category: state.category, title: state.title, content: state.value});
-    state.title = "";
-    state.value = "";
-  }, [state.title, state.value]);
+    if (this.categoryRef.current === null) {
+      this.categoryRef.current = '1'
+    }
+    this.setState({
+      content: this.editorRef.current.getInstance().getHtml(),
+      title: this.titleRef.current,
+      category: this.categoryRef.current,
+    });
 
-  return useObserver(() => (
-    <>
-      <form onSubmit={onSubmit}>
-        <input type={"text"} value={state.title} onChange={state.onChangeTitle}/>
-        <select value={state.category} onChange={state.onChangeCategory}>
-          <option value="1">errors react</option>
-          <option value="2">errors next</option>
-          <option value="3">errors js</option>
-          <option value="5">study logs react</option>
-          <option value="6">study logs next</option>
-          <option value="7">study logs js</option>
-        </select>
-        <CKEditor
-          data={state.value}
-          onInit={editor =>
-            console.log("Editor is ready to use!", editor)
-          }
-          onChange={state.onChangeContent}
-          config={{
-            ckfinder: {
-              uploadUrl: "/upload/images"
-            }
-          }}
-          editor={ClassicEditor}
-        />
-        <input type={"submit"} title={"submit"}/>
-      </form>
+  };
 
-      {state.value && <div>{ReactHtmlParser(state.value)}</div>}
-    </>
-  ));
-};
+  onChangeTitle = (e) => {
+    this.titleRef.current = e.target.value;
+  };
 
-export default Editor;
+  onChangeCategory = (e) => {
+    this.categoryRef.current = e.target.value;
+  };
+
+  componentDidUpdate() {
+    if (this.state.content && this.state.title && this.state.category) {
+      editPost.postC(this.state);
+    }
+    if (this.state.category === '1') {
+      Router.push( "/errors/react");
+    }
+    if (this.state.category === '2') {
+      Router.push( "/errors/next");
+    }
+    if (this.state.category === '3') {
+      Router.push( "/errors/js");
+    }
+  }
+
+  // componentWillUnmount() {
+  //   console.log('이거 사라져요?')
+  // }
+
+
+  render() {
+    return (
+      <>
+        <form onSubmit={this.onSubmit}>
+          <input type={"text"} value={this.title} onChange={this.onChangeTitle}/>
+          <select value={this.category} onChange={this.onChangeCategory}>
+            <option value="1">errors react</option>
+            <option value="2">errors next</option>
+            <option value="3">errors js</option>
+            <option value="5">study logs react</option>
+            <option value="6">study logs next</option>
+            <option value="7">study logs js</option>
+          </select>
+          <Editor
+            previewStyle="vertical"
+            height="300px"
+            initialEditType="wysiwyg"
+            placeholder="글쓰기"
+            ref={this.editorRef}
+          />
+          <input type={"submit"} title={"submit"}/>
+        </form>
+      </>
+    );
+  }
+}
+
+export default EditArticle;

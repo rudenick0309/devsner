@@ -9,7 +9,6 @@ const EReactList = ({data}) => {
   const [post, setPost] = useState('')
 
   const onClickPost = useCallback(() => {
-    // console.log('EReactList 컴포넌트입니다 - 1')
     dynamicPost.postR(id);
   },[])
 
@@ -18,7 +17,6 @@ const EReactList = ({data}) => {
       <div>
         <Link href={`/posts/[id]`} as={`/posts/${id}`} >
           <a>
-            {/*<img src={`/static/images/${feed.slug}.png`} />*/}
             <div onClick={onClickPost}>{title}</div>
           </a>
         </Link>
