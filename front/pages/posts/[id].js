@@ -6,35 +6,29 @@ import {toJS} from "mobx";
 import {inject, observer} from "mobx-react";
 import {useRouter} from "next/router";
 import ReactHtmlParser from "react-html-parser";
+import {useObserver, useLocalStore} from "mobx-react";
 
 // 컴포넌트 전체에 setTImeout을 주는 거는??
 const Post = () => {
-  const [post, setPost] = useState('')
-  // const {title, content, createdAt} = post
-  // const postData =
-  //
-  // useEffect(() => {
-  //   setPost('')
-  //   setTimeout(() => {
-  //     console.log('in f post, dynamic render;', toJS(dynamicPost.eRPrender));
-  //   }, 1000)
-  //   // setPost(toJS(dynamicPost.eRPrender))
-  // }, [])
+  const router = useRouter();
+  // const state = useLocalStore(() => ({
+  //   post : '',
+  // }))
 
-  console.log("Post 컴포넌트입니다 - 4", toJS(dynamicPost.eRPrender));
+  console.log("in f post, router ;", router.query.id);
   useEffect(() => {
-    setPost(toJS(dynamicPost.eRPrender))
-  }, [])
-  console.log("Post 컴포넌트입니다 - 5", post);
-  return (
+    dynamicPost.eReactPostR(router.query.id);
+
+  }, []);
+
+  return useObserver(() => (
     <AppLayout>
-      <div> {toJS(dynamicPost.eRPrender.createdAt)} </div>
-      <div> {toJS(dynamicPost.eRPrender.title)} </div>
-      <div> {ReactHtmlParser(toJS(dynamicPost.eRPrender.content))} </div>
-      {/*<div> {title}</div>*/}
-      {/*<div> {ReactHtmlParser(content)}</div>*/}
+      <div> {toJS(dynamicPost.eRPrender?.createdAt)} </div>
+      <div> {toJS(dynamicPost.eRPrender?.title)} </div>
+      <div> {ReactHtmlParser(toJS(dynamicPost.eRPrender?.content))} </div>
+
     </AppLayout>
-  );
+  ));
 };
 
 
