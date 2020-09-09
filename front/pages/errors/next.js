@@ -15,13 +15,13 @@ import {toJS} from "mobx";
 const eNext = () => {
 
   useEffect(() => {
-    editPost.errorsReactR("2");
+    editPost.postR("2");
   }, []);
 
   return useObserver(() => (
     <AppLayout>
       {/*<Editor/>*/}
-      {toJS(editPost.render) && toJS(editPost.render).reverse().map((el) => {
+      {toJS(editPost.post) && toJS(editPost.post).reverse().map((el) => {
         return <EReactList data={el}/>;
       })}
     </AppLayout>
