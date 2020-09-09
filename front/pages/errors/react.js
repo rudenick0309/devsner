@@ -28,6 +28,7 @@ const eReact = () => {
       })}
     </AppLayout>
   ));
+
 };
 
 export default eReact;
