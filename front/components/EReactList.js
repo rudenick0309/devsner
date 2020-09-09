@@ -5,20 +5,14 @@ import Link from "next/link";
 import {dynamicPost} from "../store/dynamicPost";
 
 const EReactList = ({data}) => {
-  // console.log("in EReactList, props", data);
   const {id, title, content, createdAt} = data;
   const [post, setPost] = useState('')
 
   const onClickPost = useCallback(() => {
-    console.log('EReactList 컴포넌트입니다 - 1')
-    dynamicPost.eReactPostR(id);
     // console.log('EReactList 컴포넌트입니다 - 1')
-    setTimeout(() => {
-
-    },3000)
+    dynamicPost.eReactPostR(id);
   },[])
 
-  // console.log('in EReactList, post;',post);
   return (
     <>
       <div>
