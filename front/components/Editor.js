@@ -8,30 +8,41 @@ import {action} from "mobx";
 
 const Editor = () => {
   const state = useLocalStore(() => ({
-    title: '',
-    value: "",
+    title: "",
     onChangeTitle: action((e) => {
       state.title = e.target.value;
     }),
+
+    value: "",
     onChangeContent: action((e, editor) => {
       state.value = editor.getData();
     }),
+
+    category: "1",
+    onChangeCategory: action((e) => {
+      state.category = e.target.value;
+    })
   }));
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    //ajax
-    console.log("in editor, onsubmit, 1 value;", state.value); // 그저 value 만 mobx로 보내주면 된다
-    errorsReact.errorsReactC({title: state.title, content: state.value});
-    state.title = ''
-    state.value = ''
+    errorsReact.errorsReactC({category: state.category, title: state.title, content: state.value});
+    state.title = "";
+    state.value = "";
   }, [state.title, state.value]);
 
   return useObserver(() => (
     <>
       <form onSubmit={onSubmit}>
-        <input type={'text'} value={state.title} onChange={state.onChangeTitle}/>
-
+        <input type={"text"} value={state.title} onChange={state.onChangeTitle}/>
+        <select value={state.category} onChange={state.onChangeCategory}>
+          <option value="1">errors react</option>
+          <option value="2">errors next</option>
+          <option value="3">errors js</option>
+          <option value="5">study logs react</option>
+          <option value="6">study logs next</option>
+          <option value="7">study logs js</option>
+        </select>
         <CKEditor
           data={state.value}
           onInit={editor =>
