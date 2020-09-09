@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "22.0.0",
+    "@ckeditor/ckeditor5-react": "2.1.0",
     "antd": "4.6.2",
     "axios": "0.20.0",
+    "cheerio": "1.0.0-rc.3",
+    "dotenv": "8.2.0",
+
     "eslint": "7.8.1",
     "express": "4.17.1",
     "mobx": "5.15.6",
@@ -14,6 +19,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hook-form": "6.7.2",
+    "react-html-parser": "2.0.2",
+
     "styled-components": "5.2.0"
   },
   "devDependencies": {},
