@@ -6,18 +6,16 @@ import {action} from "mobx";
 import {editPost} from "../../store/editPost";
 import dynamic from "next/dynamic";
 import EReactList from "../../components/EReactList";
-import {useRouter} from 'next/router'
-import {toJS} from "mobx";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false
 });
+import {toJS} from "mobx";
 
-
-const eReact = () => {
+const eJs = () => {
 
   useEffect(() => {
-    editPost.errorsReactR("1");
+    editPost.errorsReactR("3");
   }, []);
 
   return useObserver(() => (
@@ -28,7 +26,6 @@ const eReact = () => {
       })}
     </AppLayout>
   ));
-
 };
 
-export default eReact;
+export default eJs;

@@ -8,6 +8,7 @@ router.post('/react', async (req, res, next) => {
     const react = await ErrorsReact.create({
       title: req.body.data.title,
       content: req.body.data.content,
+      category: req.body.data.category,
     })
 
     res.status(201).json(react)
@@ -19,8 +20,12 @@ router.post('/react', async (req, res, next) => {
 
 
 router.get('/react', async (req, res, next) => {
+  console.log('b errors , req.body ; ', req); // 지금은 여기에 뭐 안들어오겠네?
   try {
-    const react = await ErrorsReact.findAll()
+    const react = await ErrorsReact.findAll(
+      { where: { category: req.query.key } },
+      { attributes: ["id", "title", "content", "createdAt"] },
+    )
     console.log('in b, eReact get, react; ', react);
     res.status(201).json(react)
   } catch(err) {

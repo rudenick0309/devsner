@@ -3,9 +3,13 @@ const Sequelize = require("sequelize");
 module.exports = class ErrorsReact extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
+      category: {
+        type: Sequelize.STRING(10),
+        allowNull:false,
+      },
       title: {
         type: Sequelize.STRING(300),
-        allowNull: true,
+        allowNull: false,
       },
       content: {
         type: Sequelize.TEXT,

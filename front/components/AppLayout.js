@@ -39,41 +39,55 @@ const AppLayout = ({children}) => {
 
       <HeaderStyled style={{ backgroundColor:'white'}} >
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">Login</Menu.Item>
-          <Menu.Item key="3">Sign Up</Menu.Item>
+          <Menu.Item key="1">
+            <Link href={'/'}><a>Home</a></Link>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Link href={'/login'}><a>Login</a></Link>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Link href={'/signup'}><a>Sign Up</a></Link>
+          </Menu.Item>
+          <Menu.Item key="7">
+            <Link href={'/edit'}><a>Edit</a></Link>
+          </Menu.Item>
+
         </Menu>
       </HeaderStyled>
 
       <Layout>
-        <Sider width={200} >
+
+        <Sider width={200} collapsible={false} style={{border: '3px solid red'}}>
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['Errors']}
             style={{ height: '100vh', borderRight: 0 }}
           >
-            <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="Errors">
+
+
+            <Menu.ItemGroup key="sub1" title="Errors" >
               <Menu.Item key="1">
                 <Link href={'/errors/react'}><a>react</a></Link>
               </Menu.Item>
-              <Menu.Item key="2">next</Menu.Item>
-              <Menu.Item key="3">js</Menu.Item>
+              <Menu.Item key="2">
+                <Link href={'/errors/next'}><a>next</a></Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link href={'/errors/js'}><a>js</a></Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
 
-            </Menu.SubMenu>
-            <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="study-logs">
+            <Menu.ItemGroup key="sub2"  title="study-logs">
               <Menu.Item key="5">react</Menu.Item>
               <Menu.Item key="6">next</Menu.Item>
               <Menu.Item key="7">js</Menu.Item>
-            </Menu.SubMenu>
+            </Menu.ItemGroup>
 
-
-
-            {/*<Error />*/}
           </Menu>
         </Sider>
 
-        <Layout style={{ padding: '0 24px 24px' }}>
+        <Layout style={{ padding: '0 24px 24px', }}>
           <Content
             className="site-layout-background"
             style={{
@@ -85,6 +99,7 @@ const AppLayout = ({children}) => {
             {children}
           </Content>
         </Layout>
+
       </Layout>
 
     </Layout>
