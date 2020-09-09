@@ -2,7 +2,6 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import AppLayout from "../../components/AppLayout";
 import {useObserver, useLocalStore} from "mobx-react";
-import {action} from "mobx";
 import {editPost} from "../../store/editPost";
 import dynamic from "next/dynamic";
 import EReactList from "../../components/EReactList";
@@ -15,13 +14,13 @@ import {toJS} from "mobx";
 const eJs = () => {
 
   useEffect(() => {
-    editPost.errorsReactR("3");
+    editPost.postR("3");
   }, []);
 
   return useObserver(() => (
     <AppLayout>
       {/*<Editor/>*/}
-      {toJS(editPost.render) && toJS(editPost.render).reverse().map((el) => {
+      {toJS(editPost.post) && toJS(editPost.post).reverse().map((el) => {
         return <EReactList data={el}/>;
       })}
     </AppLayout>
