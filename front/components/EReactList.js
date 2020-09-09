@@ -10,7 +10,7 @@ const EReactList = ({data}) => {
 
   const onClickPost = useCallback(() => {
     // console.log('EReactList 컴포넌트입니다 - 1')
-    dynamicPost.eReactPostR(id);
+    dynamicPost.postR(id);
   },[])
 
   return (
