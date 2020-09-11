@@ -1,27 +1,23 @@
 const Sequelize = require("sequelize");
 
-module.exports = class ErrorsReact extends Sequelize.Model {
+module.exports = class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
-      category: {
-        type: Sequelize.STRING(10),
+      email: {
+        type: Sequelize.STRING(50),
         allowNull:false,
       },
-      title: {
+      password: {
         type: Sequelize.STRING(300),
         allowNull: false,
       },
-      content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      }
     }, {
       sequelize,
       timestamps: true,
       underscored: false,
       paranoid: true,
-      modelName: "ErrorsReact",
-      tableName: "errorsreacts",
+      modelName: "User",
+      tableName: "users",
       charset: "utf8",
       collate: "utf8_general_ci",
     });
