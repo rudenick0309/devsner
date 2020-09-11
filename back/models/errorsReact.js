@@ -21,7 +21,7 @@ module.exports = class ErrorsReact extends Sequelize.Model {
       underscored: false,
       paranoid: true,
       modelName: "ErrorsReact",
-      tableName: "errorsReacts",
+      tableName: "errorsreacts",
       charset: "utf8",
       collate: "utf8_general_ci",
     });
