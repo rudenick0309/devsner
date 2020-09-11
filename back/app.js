@@ -5,17 +5,17 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
+const passport = require('passport');
 
 dotenv.config();
 
 const {sequelize} = require('./models')
 const indexRouter = require('./routes')
-// const testRouter = require('./routes/test')
-// const numsRouter = require('./routes/nums')
 const errorsRouter = require('./routes/errors')
+const userRouter = require('./routes/user')
+const passportConfig = require('./passport');
 
 const app = express();
-console.log('1')
 app.set('port', process.env.PORT || 3001);
 sequelize.sync({
   force:false
@@ -27,27 +27,36 @@ sequelize.sync({
     console.error(err);
   })
 
+passportConfig();
 
 app.use(morgan('dev'))
+// app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json({
   limit:'50mb'
 }));
 app.use(express.urlencoded({limit:'50mb',extended:true}))
 app.use(cookieParser(process.env.COOKIE_SECRET))
-
+app.use(session({
+  resave:false,
+  saveUninitialized:false,
+  secret:process.env.COOKIE_SECRET,
+  cookie:{
+    httpOnly:true,
+    secure:false,
+  }
+}))
 app.use(cors({
     origin: 'http://localhost:3000', // withCredentials = true ? ->  * 사용 불가. 개별 url을 적어줘야 한다.
     credentials:true,  // 쿠키를 같이 전달하고 싶을 떄 true
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
-// app.use('/test', testRouter);
-// app.use('/num', numsRouter);
 app.use('/errors', errorsRouter);
-
-
+app.use('/auth', userRouter);
 
 // 라우트 없을 때
 app.use((req,res,next) => {
