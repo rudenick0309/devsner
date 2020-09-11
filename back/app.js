@@ -10,8 +10,8 @@ dotenv.config();
 
 const {sequelize} = require('./models')
 const indexRouter = require('./routes')
-const testRouter = require('./routes/test')
-const numsRouter = require('./routes/nums')
+// const testRouter = require('./routes/test')
+// const numsRouter = require('./routes/nums')
 const errorsRouter = require('./routes/errors')
 
 const app = express();
@@ -43,8 +43,8 @@ app.use(cors({
 
 
 app.use('/', indexRouter);
-app.use('/test', testRouter);
-app.use('/num', numsRouter);
+// app.use('/test', testRouter);
+// app.use('/num', numsRouter);
 app.use('/errors', errorsRouter);
 
 

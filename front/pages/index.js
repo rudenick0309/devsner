@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState, useCallback} from "react";
 import {useObserver, useLocalStore} from "mobx-react";
-import {inputStore} from "../store/store";
+// import {inputStore} from "../store/store";
 import {action} from "mobx";
 import {Row, Col} from "antd";
 import AppLayout from "../components/AppLayout";
